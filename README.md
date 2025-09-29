@@ -49,19 +49,17 @@ SoccerSimulator/
 - **Poisson distribution**: Approximates real-world goal scoring patterns
 
 ### Tournament Rules
-- **Round-robin format**: Each team plays every other team once (6 matches for 4 teams)
+- **Full stage run**: Each team plays every other team once (6 matches for 4 teams)
 - **Standard points system**: 3 points for win, 1 for draw, 0 for loss
-- **FIFA ranking criteria**: Teams are sorted by:
+- **Ranking criteria**: Teams are sorted by:
   1. Points
   2. Goal difference
   3. Goals scored
   4. Goals conceded
-  5. Head-to-head results (basic implementation)
-  6. Team name (final tie-breaker)
 
 ### Output Features
 - **Single simulation**: Detailed match results, standings with qualification indicators, and qualified teams
-- **Statistical analysis**: 1000-run simulation showing:
+- **Statistical analysis**: Predefined amount simulation showing:
   - Qualification percentages by team strength
   - Position distribution statistics
   - Demonstration that stronger teams consistently perform better
@@ -125,7 +123,7 @@ dotnet run --project dev/SoccerSimulator.ConsoleApp
 
 ## Testing
 
-The solution includes comprehensive testing:
+The solution includes testing:
 
 ### Unit Tests
 - Match simulation accuracy and determinism
@@ -138,4 +136,4 @@ The solution includes comprehensive testing:
 - Service integration validation
 - Multiple simulation consistency checks
 
-All tests use deterministic seeding to ensure consistent results while validating that the simulation produces statistically sound outcomes that favor stronger teams.
+All tests use predfined seeding to ensure consistent results while validating that the simulation produces statistically sound outcomes that favor stronger teams.
