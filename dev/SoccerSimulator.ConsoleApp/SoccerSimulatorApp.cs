@@ -7,7 +7,7 @@ namespace SoccerSimulator.ConsoleApp;
 
 public class SoccerSimulatorApp
 {
-    private static readonly int MultipleSimulationsCount = 1000; 
+    private static readonly int SimulationsCount = 1000; 
 
     private readonly ITournamentService _tournamentService;
     private readonly IDisplayResults _displayService;
@@ -22,9 +22,20 @@ public class SoccerSimulatorApp
     {
         Console.WriteLine("=== SOCCER GROUP STAGE SIMULATOR ===");
         Console.WriteLine();
-
-        var poule = CreateSamplePoule();
         
+        var poule = CreateSamplePoule();
+
+        SimulateSingleStage(poule);
+        SimulateMultipleStages(poule);
+
+        Console.WriteLine("\nPress any key to exit...");
+        Console.ReadKey();
+
+        return Task.CompletedTask;
+    }
+
+    private void SimulateSingleStage(Poule poule)
+    {
         Console.WriteLine("Teams in Group A:");
         foreach (var team in poule.Teams.OrderBy(t => t.Name))
         {
@@ -32,45 +43,21 @@ public class SoccerSimulatorApp
         }
         Console.WriteLine();
 
-       
         var result = _tournamentService.SimulateGroupStage(poule);
         _displayService.DisplayTournamentResult(result);
+    }
 
-        // Run multiple simulations to show overall stats
+    private void SimulateMultipleStages(Poule poule)
+    {
         Console.WriteLine("\n" + new string('=', 80));
         Console.WriteLine("RUNNING 1000 SIMULATIONS TO SHOW TEAM STRENGTH IMPACT:");
         Console.WriteLine(new string('=', 80));
-        
-        RunMultipleSimulations(poule, MultipleSimulationsCount);
-        
-        Console.WriteLine("\nPress any key to exit...");
-        Console.ReadKey();
-        
-        return Task.CompletedTask;
-    }
 
-    private void RunMultipleSimulations(Poule poule, int simulationCount)
-    {
         var qualificationStats = poule.Teams.ToDictionary(t => t.Name, t => 0);
         var positionStats = poule.Teams.ToDictionary(t => t.Name, t => new int[poule.Teams.Count]);
 
-        for (int i = 0; i < simulationCount; i++)
-        {
-            var result = _tournamentService.SimulateGroupStage(poule);
-            
-            foreach (var qualifiedTeam in result.QualifiedTeams)
-            {
-                qualificationStats[qualifiedTeam.Name]++;
-            }
+        SimulateTournamentStages(poule, qualificationStats, positionStats);
 
-            for (int pos = 0; pos < result.Standings.Count; pos++)
-            {
-                var teamName = result.Standings[pos].Team.Name;
-                positionStats[teamName][pos]++;
-            }
-        }
-
-        // Display results
         Console.WriteLine("QUALIFICATION STATS:");
         Console.WriteLine(new string('-', 60));
         Console.WriteLine($"{"Team",-25} {"Qualified",-10} {"Percentage",-10} {"Strength",-8}");
@@ -80,7 +67,7 @@ public class SoccerSimulatorApp
         foreach (var team in sortedTeams)
         {
             var qualifications = qualificationStats[team.Name];
-            var percentage = (qualifications * 100.0) / simulationCount;
+            var percentage = (qualifications * 100.0) / SimulationsCount;
             Console.WriteLine($"{team.Name,-25} {qualifications,-10} {percentage:F1}%{"",-5} {team.TeamStrength:F1}");
         }
 
@@ -96,6 +83,25 @@ public class SoccerSimulatorApp
             Console.WriteLine($"{team.Name,-25} " +
                 $"{positions[0],-8} {positions[1],-8} {positions[2],-8} {positions[3],-8} " +
                 $"{team.TeamStrength:F1}");
+        }
+    }
+
+    private void SimulateTournamentStages(Poule poule, Dictionary<string, int> qualificationStats, Dictionary<string, int[]> positionStats)
+    {
+        for (int i = 0; i < SimulationsCount; i++)
+        {
+            var result = _tournamentService.SimulateGroupStage(poule);
+
+            foreach (var qualifiedTeam in result.QualifiedTeams)
+            {
+                qualificationStats[qualifiedTeam.Name]++;
+            }
+
+            for (int pos = 0; pos < result.Standings.Count; pos++)
+            {
+                var teamName = result.Standings[pos].Team.Name;
+                positionStats[teamName][pos]++;
+            }
         }
     }
 

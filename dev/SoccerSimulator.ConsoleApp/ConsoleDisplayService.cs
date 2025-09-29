@@ -1,6 +1,5 @@
 using SoccerSimulator.Core;
 using SoccerSimulator.Core.Repository.Entities;
-using SoccerSimulator.Core.Services;
 
 namespace SoccerSimulator.ConsoleApp;
 

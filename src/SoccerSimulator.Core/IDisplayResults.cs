@@ -1,5 +1,4 @@
 ﻿using SoccerSimulator.Core.Repository.Entities;
-using SoccerSimulator.Core.Services;
 
 namespace SoccerSimulator.Core;
 

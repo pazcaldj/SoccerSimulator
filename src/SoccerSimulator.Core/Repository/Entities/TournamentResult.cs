@@ -1,6 +1,4 @@
-using SoccerSimulator.Core.Repository.Entities;
-
-namespace SoccerSimulator.Core.Services;
+namespace SoccerSimulator.Core.Repository.Entities;
 
 public record TournamentResult(
     Poule Poule,
