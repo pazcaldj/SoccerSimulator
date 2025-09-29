@@ -13,15 +13,15 @@ The solution is organized into the following projects:
 ```
 SoccerSimulator/
 ├── src/
-│   └── SoccerSimulator.Core/           # Core business logic and entities
-│       ├── Repository/Entities/        # Domain entities and models
-│       ├── Services/                   # Business logic services
-│       └── Configuration/              # Dependency injection setup
+│   └── SoccerSimulator.Core/               # Core business logic and entities
+│       ├── Repository/Entities/            # Domain entities and models
+│       ├── Services/                       # Business logic services
+│       └── Configuration/                  # Dependency injection setup
 ├── dev/
-│   └── SoccerSimulator.ConsoleApp/     # Console application
+│   └── SoccerSimulator.ConsoleApp/         # Console application
 └── tests/
-    ├── SoccerSimulator.Tests/          # Unit tests
-    └── SoccerSimulator.IntegrationTests/ # Integration tests
+    ├── SoccerSimulator.Tests/              # Unit tests
+    └── SoccerSimulator.IntegrationTests/   # Integration tests
 ```
 
 ## Key Components
