@@ -45,7 +45,7 @@ SoccerSimulator/
 ### Match Simulation
 - **Strength-based outcomes**: Teams with higher average player strength have better chances of winning
 - **Home advantage**: 10% boost for the home team
-- **Realistic scoring**: Uses statistical distribution to generate believable scorelines
+- **Realistic scoring**: Uses statistical distribution to generate believable scorelines (using the https://en.wikipedia.org/wiki/Poisson_distribution)
 - **Poisson distribution**: Approximates real-world goal scoring patterns
 
 ### Tournament Rules
