@@ -1,35 +1,44 @@
 # Soccer Group Stage Simulator
 
-A .NET application that simulates soccer group stage tournaments with realistic team strength-based outcomes.
+A .NET application that simulates soccer group stage tournaments with realistic team strength-based outcomes using clean architecture principles.
 
 ## Overview
 
 This application simulates a group stage tournament with 4 teams playing in a round-robin format (6 matches total). The simulation takes into account team strength based on player ratings, ensuring that stronger teams have better chances of winning and advancing to the knockout stage.
 
-## Architecture
+## Project Structure
 
-The solution follows clean architecture principles with separation of concerns:
+The solution is organized into the following projects:
 
-### Projects Structure
+```
+SoccerSimulator/
+├── src/
+│   └── SoccerSimulator.Core/           # Core business logic and entities
+│       ├── Repository/Entities/        # Domain entities and models
+│       ├── Services/                   # Business logic services
+│       └── Configuration/              # Dependency injection setup
+├── dev/
+│   └── SoccerSimulator.ConsoleApp/     # Console application
+└── tests/
+    ├── SoccerSimulator.Tests/          # Unit tests
+    └── SoccerSimulator.IntegrationTests/ # Integration tests
+```
 
-- **SoccerSimulator.Core**: Contains business logic, entities, and services
-- **SoccerSimulator.Console**: Console application entry point
-- **SoccerSimulator.Tests**: Unit tests for core functionality
+## Key Components
 
-### Key Components
-
-#### Entities
+### Entities
 - `Team`: Represents a soccer team with players and calculated team strength
 - `Player`: Individual player with name and strength rating
 - `Match`: Represents a match with teams, scores, and status
 - `TeamStanding`: Tracks team performance (wins, losses, points, goals, etc.)
 - `Poule`: Represents a group of teams
+- `TournamentResult`: Contains complete tournament outcome data
 
-#### Services
+### Services
 - `IMatchSimulator`: Simulates individual matches based on team strength
 - `IGroupStageService`: Generates group matches and calculates standings
 - `ITournamentService`: Orchestrates the entire tournament simulation
-- `IDisplayService`: Handles output formatting and display
+- `IDisplayResults`: Handles output formatting and display
 
 ## Features
 
@@ -50,42 +59,52 @@ The solution follows clean architecture principles with separation of concerns:
   5. Head-to-head results (basic implementation)
   6. Team name (final tie-breaker)
 
-### Statistical Analysis
-- Single simulation with detailed match results and standings
-- Multiple simulation analysis (1000 runs) showing:
+### Output Features
+- **Single simulation**: Detailed match results, standings with qualification indicators, and qualified teams
+- **Statistical analysis**: 1000-run simulation showing:
   - Qualification percentages by team strength
   - Position distribution statistics
   - Demonstration that stronger teams consistently perform better
 
 ## Sample Output
 
-The simulator shows that team strength properly influences results:
+### Single Simulation
+```
+=== GROUP A TOURNAMENT RESULTS ===
 
+MATCH RESULTS:
+=============================================================
+Round 1: Manchester United         2-1 Newcastle United
+Round 2: Manchester United         1-0 Brighton & Hove
+Round 3: Manchester United         3-0 Luton Town
+...
+
+GROUP STANDINGS:
+=================================================================================
+Pos Team                      MP  W   D   L   GF  GA  GD   Pts
+--------------------------------------------------------------------------------
+1*  Manchester United         3   3   0   0   6   1   5    9
+2*  Brighton & Hove           3   2   0   1   5   1   4    6
+3   Newcastle United          3   1   0   2   5   5   0    3
+4   Luton Town                3   0   0   3   2   11  -9   0
+
+* = Qualified for knockout stage
+
+TEAMS ADVANCING TO KNOCKOUT STAGE:
+=========================================
+1. Manchester United
+2. Brighton & Hove
+```
+
+### Statistical Analysis
 ```
 QUALIFICATION STATISTICS:
 Team                      Qualified  Percentage Strength
-Manchester United         807        80.7%      84.2
-Newcastle United          656        65.6%      76.4
-Brighton & Hove           412        41.2%      69.2
-Luton Town                125        12.5%      56.0
+Manchester United         814        81.4%      84.2
+Newcastle United          641        64.1%      76.4
+Brighton & Hove           400        40.0%      69.2
+Luton Town                145        14.5%      56.0
 ```
-
-## Technical Implementation
-
-### Key Design Decisions
-
-1. **Immutable Records**: Used for entities to ensure data integrity
-2. **Dependency Injection**: Proper IoC container setup for testability
-3. **Interface Segregation**: Small, focused interfaces for each service
-4. **Deterministic Testing**: Seeded random number generation for reliable tests
-5. **Statistical Validation**: Tests verify that stronger teams win more often
-
-### Extensibility Features
-
-- **Pluggable Match Simulation**: Easy to replace the simulation algorithm
-- **Multiple Display Formats**: Interface-based display service supports different output formats
-- **Tournament Formats**: Architecture supports extending to different tournament types
-- **Team Configuration**: Easy to modify team compositions and player strengths
 
 ## Running the Application
 
@@ -101,34 +120,22 @@ dotnet build
 dotnet test
 
 # Run the console application
-dotnet run --project SoccerSimulator.Console
+dotnet run --project dev/SoccerSimulator.ConsoleApp
 ```
-
-## Future Enhancements
-
-This architecture is designed for extensibility:
-
-1. **Web API**: The console app can be replaced with a REST API
-2. **Database Integration**: Add repositories for persistent storage
-3. **Advanced Simulation**: More sophisticated match simulation algorithms
-4. **Multiple Groups**: Support for multiple groups and knockout stages
-5. **Player Statistics**: Individual player performance tracking
-6. **Real-time Updates**: Live match simulation with progressive updates
 
 ## Testing
 
-The solution includes comprehensive unit tests covering:
-- Match simulation accuracy
+The solution includes comprehensive testing:
+
+### Unit Tests
+- Match simulation accuracy and determinism
 - Tournament generation logic
-- Standings calculation
+- Standings calculation and sorting
 - Statistical distribution verification
 
-Tests use deterministic seeding to ensure consistent results while validating that the simulation produces statistically sound outcomes.
+### Integration Tests
+- Complete workflow testing
+- Service integration validation
+- Multiple simulation consistency checks
 
-## Architecture Benefits
-
-- **Maintainability**: Clear separation of concerns and single responsibility principle
-- **Testability**: Dependency injection and interface-based design enable easy unit testing
-- **Extensibility**: Modular design allows for easy addition of new features
-- **Performance**: Efficient algorithms with minimal memory allocation
-- **Reliability**: Comprehensive test coverage ensures consistent behavior
+All tests use deterministic seeding to ensure consistent results while validating that the simulation produces statistically sound outcomes that favor stronger teams.
