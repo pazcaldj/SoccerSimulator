@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dev", "dev", "{3A965CD6-C7B5-4372-A671-D3D685AF46BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EABAF698-D0F1-48DC-AFBE-C5E109F8304B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E8ED6CC9-BACB-4252-ADF8-1DBBF611B345}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerSimulator.Core", "src\SoccerSimulator.Core\SoccerSimulator.Core.csproj", "{D3D8A650-D4B6-485C-8430-03FE75E649BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerSimulator.Tests", "tests\SoccerSimulator.Tests\SoccerSimulator.Tests.csproj", "{C30FD9E6-FE82-4DD3-9110-FF5D9F25DDF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerSimulator.ConsoleApp", "dev\SoccerSimulator.ConsoleApp\SoccerSimulator.ConsoleApp.csproj", "{C2956BEC-D273-40D4-ADD0-560860E5C5C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3D8A650-D4B6-485C-8430-03FE75E649BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3D8A650-D4B6-485C-8430-03FE75E649BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3D8A650-D4B6-485C-8430-03FE75E649BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3D8A650-D4B6-485C-8430-03FE75E649BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C30FD9E6-FE82-4DD3-9110-FF5D9F25DDF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30FD9E6-FE82-4DD3-9110-FF5D9F25DDF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30FD9E6-FE82-4DD3-9110-FF5D9F25DDF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C30FD9E6-FE82-4DD3-9110-FF5D9F25DDF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2956BEC-D273-40D4-ADD0-560860E5C5C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2956BEC-D273-40D4-ADD0-560860E5C5C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2956BEC-D273-40D4-ADD0-560860E5C5C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2956BEC-D273-40D4-ADD0-560860E5C5C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D3D8A650-D4B6-485C-8430-03FE75E649BC} = {EABAF698-D0F1-48DC-AFBE-C5E109F8304B}
+		{C30FD9E6-FE82-4DD3-9110-FF5D9F25DDF7} = {E8ED6CC9-BACB-4252-ADF8-1DBBF611B345}
+		{C2956BEC-D273-40D4-ADD0-560860E5C5C6} = {3A965CD6-C7B5-4372-A671-D3D685AF46BA}
+	EndGlobalSection
+EndGlobal
