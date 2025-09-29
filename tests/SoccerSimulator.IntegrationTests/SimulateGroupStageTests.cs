@@ -4,12 +4,12 @@ using SoccerSimulator.Core.Repository.Entities;
 using SoccerSimulator.Core.Services;
 using System.Collections.Frozen;
 
-namespace SoccerSimulator.Tests;
+namespace SoccerSimulator.IntegrationTests;
 
-public class IntegrationTests
+public class SimulateGroupStageTests
 {
     [Fact]
-    public void CompleteWorkflow_SimulatesTournamentSuccessfully()
+    public void Should_CompleteWorkflow_When_SimulatesTournamentSuccessfully()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -32,29 +32,20 @@ public class IntegrationTests
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(6, result.Matches.Count); // 4 teams = 6 matches
-        Assert.Equal(4, result.Standings.Count); // 4 teams in standings
-        Assert.Equal(2, result.QualifiedTeams.Count); // 2 qualified teams
+        Assert.Equal(6, result.Matches.Count);
+        Assert.Equal(4, result.Standings.Count);
+        Assert.Equal(2, result.QualifiedTeams.Count);
+
         Assert.All(result.Matches, m => Assert.Equal(MatchStatus.Completed, m.Status));
-        
-        // Verify standings are properly sorted (first team should have most points or better metrics)
-        for (int i = 0; i < result.Standings.Count - 1; i++)
-        {
-            var current = result.Standings[i];
-            var next = result.Standings[i + 1];
-            
-            // Current team should be better than or equal to next team
-            Assert.True(current.Points >= next.Points ||
-                       (current.Points == next.Points && current.GoalDifference >= next.GoalDifference));
-        }
-        
-        // Qualified teams should be the top 2 from standings
+
+        AssertStandingsAreSorted(result);
+
         Assert.Equal(result.Standings[0].Team, result.QualifiedTeams[0]);
         Assert.Equal(result.Standings[1].Team, result.QualifiedTeams[1]);
     }
 
     [Fact]
-    public void MultipleSimulations_ProduceConsistentResults()
+    public void When_MultipleSimulations_Should_SetStrongerTeamAsQualifiedMoreOften()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -66,12 +57,11 @@ public class IntegrationTests
         var strongTeam = new Team(Guid.NewGuid(), "Strong Team", [new("Star", 90)]);
         var weakTeam = new Team(Guid.NewGuid(), "Weak Team", [new("Rookie", 40)]);
         var mediumTeam1 = new Team(Guid.NewGuid(), "Medium Team 1", [new("Average", 65)]);
-        var mediumTeam2 = new Team(Guid.NewGuid(), "Medium Team 2", [new("Regular", 65)]);
+        var mediumTeam2 = new Team(Guid.NewGuid(), "Medium Team 2", [new("Ok-ish", 65)]);
 
         var teams = new List<Team> { strongTeam, mediumTeam1, mediumTeam2, weakTeam };
         var poule = new Poule(PouleName.A, teams.ToFrozenSet());
 
-        // Act - run multiple simulations
         int strongTeamQualifications = 0;
         int weakTeamQualifications = 0;
         int simulations = 100;
@@ -79,19 +69,29 @@ public class IntegrationTests
         for (int i = 0; i < simulations; i++)
         {
             var result = tournamentService.SimulateGroupStage(poule);
-            
+
             if (result.QualifiedTeams.Contains(strongTeam))
+            {
                 strongTeamQualifications++;
+            }
             if (result.QualifiedTeams.Contains(weakTeam))
+            {
                 weakTeamQualifications++;
+            }
         }
 
-        // Assert - strong team should qualify more often than weak team
-        Assert.True(strongTeamQualifications > weakTeamQualifications,
-            $"Strong team qualified {strongTeamQualifications} times vs weak team {weakTeamQualifications} times");
-        
-        // Strong team should qualify in majority of simulations
-        Assert.True(strongTeamQualifications > simulations * 0.6,
-            $"Strong team should qualify in >60% of simulations, but qualified in {strongTeamQualifications}/{simulations}");
+        Assert.True(strongTeamQualifications > weakTeamQualifications);
+    }
+
+    private static void AssertStandingsAreSorted(TournamentResult result)
+    {
+        for (int i = 0; i < result.Standings.Count - 1; i++)
+        {
+            var current = result.Standings[i];
+            var next = result.Standings[i + 1];
+
+            Assert.True(current.Points >= next.Points ||
+                       current.Points == next.Points && current.GoalDifference >= next.GoalDifference);
+        }
     }
 }

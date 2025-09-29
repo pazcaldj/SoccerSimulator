@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerSimulator.Tests", "te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerSimulator.ConsoleApp", "dev\SoccerSimulator.ConsoleApp\SoccerSimulator.ConsoleApp.csproj", "{C2956BEC-D273-40D4-ADD0-560860E5C5C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerSimulator.IntegrationTests", "tests\SoccerSimulator.IntegrationTests\SoccerSimulator.IntegrationTests.csproj", "{987A8BC8-75DA-4263-B46C-C90B8108270E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C2956BEC-D273-40D4-ADD0-560860E5C5C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2956BEC-D273-40D4-ADD0-560860E5C5C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2956BEC-D273-40D4-ADD0-560860E5C5C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{987A8BC8-75DA-4263-B46C-C90B8108270E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{987A8BC8-75DA-4263-B46C-C90B8108270E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{987A8BC8-75DA-4263-B46C-C90B8108270E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{987A8BC8-75DA-4263-B46C-C90B8108270E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,5 +47,6 @@ Global
 		{D3D8A650-D4B6-485C-8430-03FE75E649BC} = {EABAF698-D0F1-48DC-AFBE-C5E109F8304B}
 		{C30FD9E6-FE82-4DD3-9110-FF5D9F25DDF7} = {E8ED6CC9-BACB-4252-ADF8-1DBBF611B345}
 		{C2956BEC-D273-40D4-ADD0-560860E5C5C6} = {3A965CD6-C7B5-4372-A671-D3D685AF46BA}
+		{987A8BC8-75DA-4263-B46C-C90B8108270E} = {E8ED6CC9-BACB-4252-ADF8-1DBBF611B345}
 	EndGlobalSection
 EndGlobal
