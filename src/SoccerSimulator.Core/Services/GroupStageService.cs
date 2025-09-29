@@ -93,10 +93,14 @@ public class GroupStageService : IGroupStageService
     private static int CalculateMatchPoints(int teamScore, int visitScore)
     {
         if (teamScore == visitScore)
+        {
             return 1;
+        }
 
-        if(teamScore > visitScore)
+        if (teamScore > visitScore)
+        {
             return 3;
+        }
 
         return 0;
     }
