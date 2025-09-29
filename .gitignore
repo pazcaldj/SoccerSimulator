@@ -338,8 +338,3 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-
-# Own exclusions
-_downloads/
-**/_downloads/
-/src/RailStats/.local-chromium/Win64-706915/chrome-win
