@@ -10,8 +10,9 @@ public interface IMatchSimulator
 
 public class MatchSimulator : IMatchSimulator
 {
-    private static readonly double homeMorale = 1.1;
-    private static readonly double goalCap = 10;
+    private static readonly double HomeMorale = 1.1;
+    private static readonly double GoalCap = 10;
+    private static readonly double BaseExpectedGoal = 1;
 
     private readonly Random _random;
 
@@ -32,7 +33,7 @@ public class MatchSimulator : IMatchSimulator
 
     public Match SimulateMatch(Team home, Team visitor, DateTime matchDateTime)
     {
-        var homeStrength = CalculateTeamStrength(home) * homeMorale;
+        var homeStrength = CalculateTeamStrength(home) * HomeMorale;
         var visitorStrength = CalculateTeamStrength(visitor);
 
         var homeExpectedGoals = CalculateExpectedGoals(homeStrength, visitorStrength);
@@ -62,13 +63,10 @@ public class MatchSimulator : IMatchSimulator
         return team.Players.Average(p => p.Strength);
     }
 
-    private double CalculateExpectedGoals(double attackingStrength, double defendingStrength)
+    private static double CalculateExpectedGoals(double attackingStrength, double defendingStrength)
     {
-        // Base expected goals adjusted by strength ratio
         var strengthRatio = attackingStrength / Math.Max(defendingStrength, 1.0);
-        var baseExpectedGoals = 1.5; // Average goals per team in a match
-
-        return baseExpectedGoals * strengthRatio;
+        return BaseExpectedGoal * strengthRatio;
     }
 
     private int GenerateGoals(double expectedGoals)
@@ -78,7 +76,7 @@ public class MatchSimulator : IMatchSimulator
         var cumulativeProbability = probability;
         var randomValue = _random.NextDouble();
 
-        while (randomValue > cumulativeProbability && goals < goalCap)
+        while (randomValue > cumulativeProbability && goals < GoalCap)
         {
             goals++;
             probability *= expectedGoals / goals;
